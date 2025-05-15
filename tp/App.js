@@ -1,37 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 
-const imgLocal = require ('./assets/psg.png')
+const imgLocal = require('./assets/coca.png');
 
 export default function App() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    if (email && password) {
+      Alert.alert('Bienvenido', `Has iniciado sesión como: ${email}`);
+    } else {
+      Alert.alert('Error', 'Por favor complete todos los campos.');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Form de inicio de sesión</Text>
-        <ImageBackground
-        source={imgLocal}
-        resizeMode='cover'
-        style={styles.ImageBackground}>
-       </ImageBackground>
+        <ImageBackground source={imgLocal} resizeMode="contain" style={styles.imageBackground} />
+        <Text style={styles.title}>Iniciar Sesión</Text>
         <TextInput
           style={styles.input}
-          placeholder="Ingrese el correo electrónico"
+          placeholder="Ingrese su mail"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           style={styles.input}
-          placeholder="Ingrese su contraseña: "
-          secureTextEntry={true}
+          placeholder="Ingrese su contraseña"
+          secureTextEntry={true} 
+          value={password}
+          onChangeText={setPassword}
         />
-
-        <TouchableOpacity style={styles.button}
-        onPress= {() => Alert.alert ('El registro fue exitoso. Bienvenido.')}>
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
-          
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
-      
     </View>
   );
 }
@@ -39,51 +47,57 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#e6f0fa',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   formContainer: {
     width: '100%',
-    maxWidth: 400,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
+    maxWidth: 380,
+    backgroundColor: '#ffffff',
+    padding: 25,
+    borderRadius: 20,
+    alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 5, // Esto es para Android
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    elevation: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#333',
     marginBottom: 20,
   },
   input: {
+    width: '100%',
     height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 15,
-    paddingLeft: 10,
+    paddingHorizontal: 15,
     fontSize: 16,
+    backgroundColor: '#f9f9f9',
   },
   button: {
+    width: '100%',
     backgroundColor: '#007bff',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
+    marginTop: 10,
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
-  ImageBackground: {
-    width: 300,
-    height: 300
-  }
-
+  imageBackground: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+  },
 });
